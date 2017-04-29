@@ -8,5 +8,7 @@
 		"css": ["styles.css"],
 		"js": ["10bisExtension.js"],
 		"matches": ["https://www.10bis.co.il/Restaurants/Menu/*"] 
-	}]
+	}],
+
+	"icons": { "128" : "icon.png"}
 }
