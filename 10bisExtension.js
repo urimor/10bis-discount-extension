@@ -35,7 +35,7 @@ function updatePrices(discount) {
 		priceDiv.innerHTML = priceDiv.innerHTML.replace(/₪ (\d+.\d+)/,(match, price) => {
 			let newPrice = getNewPrice(price,discount).toFixed(2);
 			let newPriceString = match.replace(/\d+.\d+/,newPrice);
-			return `<span class='new-price'>${newPriceString}</span><span class='old-price'>${match}</span>`;
+			return `<span class='new-price'>${newPriceString}</span> <span class='old-price'>${match}</span>`;
 		});
 	};
 }
