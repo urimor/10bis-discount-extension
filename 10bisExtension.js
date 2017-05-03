@@ -1,6 +1,7 @@
 if(isThereADiscount()){
 	let discount = getDiscount();
 	if(typeof discount !== 'undefined') {
+		chrome.runtime.sendMessage({type:'10bisDiscountShowIcon'});
 		updatePrices(discount);
 	}
 }

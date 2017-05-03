@@ -3,12 +3,17 @@
 	"name": "10bis price after discount",
 	"description": "This extension displays the prices after discount in 10bis menu page",
 	"version": "0.1.1",
-
+	"background": {
+		"persistent": false,
+		"scripts": ["background.js"]
+	},
 	"content_scripts": [{
 		"css": ["styles.css"],
 		"js": ["10bisExtension.js"],
 		"matches": ["https://www.10bis.co.il/Restaurants/Menu/*"] 
 	}],
-
+	"page_action":{
+		"default_icon" : "icon.png"
+	},
 	"icons": { "128" : "icon.png"}
 }
