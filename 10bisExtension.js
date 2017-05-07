@@ -1,28 +1,10 @@
-if(isThereADiscount()){
-	let discount = getDiscount();
-	if(typeof discount !== 'undefined') {
-		chrome.runtime.sendMessage({
-			type:'10bisDiscountShowIcon',
-			discount: discount
-		});
-		updatePrices(discount);
-	}
-}
-
-function isThereADiscount() {
-	let discountDivs = document.getElementsByClassName('discountCouponImgHeaderRed SpecialDiscountPercent');
-	if(typeof discountDivs === 'undefined'){
-		return false;
-	}
-	let theDiscountDiv = discountDivs[0];
-	if(typeof theDiscountDiv === 'undefined'){
-		return false;
-	}
-	let regExpMatch = theDiscountDiv.innerHTML.match(/(\d+)\%/);
-	if(regExpMatch === null || regExpMatch.length < 2){
-		return false;
-	}
-	return true;
+let discount = getDiscount();
+if(discount > 0) {
+	chrome.runtime.sendMessage({
+		type:'10bisDiscountShowIcon',
+		discount: discount
+	});
+	updatePrices(discount);
 }
 
 function getDiscount() {
@@ -31,6 +13,7 @@ function getDiscount() {
 		let discount = discountDiv.innerHTML.match(/(\d+)\%/)[1];
 		return parseInt(discount)/100;
 	}
+	return 0;
 }
 
 function updatePrices(discount) {
