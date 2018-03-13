@@ -18,18 +18,16 @@ function isThereADiscount() {
 	if(typeof theDiscountDiv === 'undefined'){
 		return false;
 	}
-	let regExpMatch = theDiscountDiv.innerHTML.match(/(\d+)\%/);
-	if(regExpMatch === null || regExpMatch.length < 2){
-		return false;
-	}
-	return true;
+	let regExpMatch = theDiscountDiv.innerHTML.match(/((\d+.)?\d+)\%/);
+	return !(regExpMatch === null || regExpMatch.length < 2);
+
 }
 
 function getDiscount() {
 	let discountDiv = document.getElementsByClassName('discountCouponImgHeaderRed SpecialDiscountPercent')[0];
 	if(discountDiv){
-		let discount = discountDiv.innerHTML.match(/(\d+)\%/)[1];
-		return parseInt(discount)/100;
+		let discount = discountDiv.innerHTML.match(/((\d+.)?\d+)\%/)[1];
+		return parseFloat(discount)/100;
 	}
 }
 
@@ -41,7 +39,7 @@ function updatePrices(discount) {
 			let newPriceString = match.replace(/\d+.\d+/,newPrice);
 			return `<span class='new-price'>${newPriceString}</span> <span class='old-price'>${match}</span>`;
 		});
-	};
+	}
 }
 
 function getNewPrice(oldPrice, discount) {
