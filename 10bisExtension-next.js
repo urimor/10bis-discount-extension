@@ -2,16 +2,19 @@
     const discountElementClassName = 'MenuTag__MenuTagSubtextStyle-yyq448-2 dSdtqR styled__TagText-sc-1my4kki-17 kypWSc';
     const priceTagsClassName = 'Dishstyled__DishPrice-sc-1lozbs4-3 kAQXPe';
 
-    if (isThereADiscount()) {
-        let discount = getDiscount();
-        if (typeof discount !== 'undefined') {
-            chrome.runtime.sendMessage({
-                type: '10bisDiscountShowIcon',
-                discount: discount
-            });
-            updatePrices(discount);
+    const mutationsObserver = new MutationObserver((e) => {
+        if (isThereADiscount() && !isPricesUpdated()) {
+            let discount = getDiscount();
+            if (typeof discount !== 'undefined') {
+                chrome.runtime.sendMessage({
+                    type: '10bisDiscountShowIcon',
+                    discount: discount
+                });
+                updatePrices(discount);
+            }
         }
-    }
+    });
+    mutationsObserver.observe(document,{attributes: false, childList: true, subtree: true});
 
     function isThereADiscount() {
         let discountElements = document.getElementsByClassName(discountElementClassName);
@@ -44,14 +47,6 @@
                 return `<span class='new-price'>${newPriceString}</span> <span class='old-price'>${match}</span>`;
             });
         }
-        const mutationObserver = new MutationObserver(() => {
-            if(!isPricesUpdated()){
-                updatePrices(discount);
-            }
-            mutationObserver.disconnect();
-        });
-
-        mutationObserver.observe(priceElements[0], {attributes: true, childList: true, subtree: true});
     }
 
     function isPricesUpdated() {
