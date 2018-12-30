@@ -1,6 +1,6 @@
 (function () {
-    const discountElementClassName = 'styled__TagText-sc-1my4kki-18 MenuTag__MenuTagSubtextStyle-yyq448-2 jyrQKq';
-    const priceTagsClassName = 'Dishstyled__DishPrice-sc-1lozbs4-3 eKyQrs';
+    const discountElementClassName = 'styled__TagText-sc-1my4kki-21 MenuTag__MenuTagSubtextStyle-yyq448-2 jyrQKq';
+    const priceTagsClassName = 'MenuDishstyled__DishPrice-sc-61p3f0-3 dQnoFt';
 
     const mutationsObserver = new MutationObserver((e) => {
         if (isThereADiscount() && !isPricesUpdated()) {
