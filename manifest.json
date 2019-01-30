@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "10bis price after discount",
 	"description": "This extension displays the prices after discount in 10bis menu page",
-	"version": "0.3.5",
+	"version": "0.3.6",
 	"background": {
 		"persistent": false,
 		"scripts": ["background.js"]

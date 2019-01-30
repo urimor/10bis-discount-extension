@@ -1,5 +1,5 @@
 (function () {
-    const discountElementClassName = 'styled__TagText-sc-1my4kki-21 MenuTag__MenuTagSubtextStyle-yyq448-2 jyrQKq';
+    const discountElementSelector = 'p[type=DiscountCoupon]+p';
     const priceTagsClassName = 'MenuDishstyled__DishPrice-sc-61p3f0-3 dQnoFt';
 
     const mutationsObserver = new MutationObserver((e) => {
@@ -17,21 +17,17 @@
     mutationsObserver.observe(document,{attributes: false, childList: true, subtree: true});
 
     function isThereADiscount() {
-        let discountElements = document.getElementsByClassName(discountElementClassName);
-        if (discountElements === undefined) {
+        let discountElement = document.querySelector(discountElementSelector);
+        if (discountElement === undefined) {
             return false;
         }
-        let theDiscountElement = discountElements[0];
-        if (theDiscountElement === undefined) {
-            return false;
-        }
-        let regExpMatch = theDiscountElement.innerHTML.match(/((\d+.)?\d+)\%/);
+        let regExpMatch = discountElement.innerHTML.match(/((\d+.)?\d+)\%/);
         return !(regExpMatch === null || regExpMatch.length < 2);
 
     }
 
     function getDiscount() {
-        let discountElement = document.getElementsByClassName(discountElementClassName)[0];
+        let discountElement = document.querySelector(discountElementSelector);
         if (discountElement) {
             let discount = discountElement.innerHTML.match(/((\d+.)?\d+)\%/)[1];
             return parseFloat(discount) / 100;
