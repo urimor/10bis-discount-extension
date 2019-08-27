@@ -1,6 +1,6 @@
 (function () {
-    const discountElementSelector = 'p[type=DiscountCoupon]+p';
-    const priceTagsClassName = 'MenuDishstyled__DishPrice-sc-61p3f0-3 dQnoFt';
+    const discountElementSelector = '.DiscountTag__DiscountText-sc-1nsisq8-1';
+    const priceTagsClassName = '.PriceLabel__Root-tydi84-0>div';
 
     const mutationsObserver = new MutationObserver((e) => {
         if (isThereADiscount() && !isPricesUpdated()) {
@@ -14,11 +14,11 @@
             }
         }
     });
-    mutationsObserver.observe(document,{attributes: false, childList: true, subtree: true});
+    mutationsObserver.observe(document.querySelector('body'),{attributes: false, childList: true, subtree: false});
 
     function isThereADiscount() {
         let discountElement = document.querySelector(discountElementSelector);
-        if (discountElement === undefined) {
+        if (discountElement === undefined || discountElement === null) {
             return false;
         }
         let regExpMatch = discountElement.innerHTML.match(/((\d+.)?\d+)\%/);
@@ -35,9 +35,9 @@
     }
 
     function updatePrices(discount) {
-        let priceElements = document.getElementsByClassName(priceTagsClassName);
+        let priceElements = document.querySelectorAll(priceTagsClassName);
         for (let priceElement of priceElements) {
-            priceElement.innerHTML = priceElement.innerHTML.replace(/(\d+.\d+) ₪/, (match, price) => {
+            priceElement.innerHTML = priceElement.innerText.replace(/₪(\d+.\d+)/, (match, price) => {
                 let newPrice = getNewPrice(price, discount).toFixed(2);
                 let newPriceString = match.replace(/\d+.\d+/, newPrice);
                 return `<span class='new-price'>${newPriceString}</span> <span class='old-price'>${match}</span>`;
